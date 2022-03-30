@@ -1,23 +1,24 @@
-import logo from './logo.svg';
 import './App.css';
+import 'antd/dist/antd.css'
+import FormLogin from './components/FormLogin';
+import FormRegister from './components/FormRegister';
+import { Route, Routes } from 'react-router-dom';
+import DoQuiz from './components/DoQuiz';
+import ManageQuiz from './components/ManageQuiz';
+import Guard from './Guard/Guard';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <Routes>
+        <Route path='/' element={<FormLogin />} />
+        <Route element={<Guard />}>
+          <Route path='/register' element={< FormRegister />} />
+          <Route path='/do-quiz' element={< DoQuiz />} />
+          <Route path='/manage-quiz' element={< ManageQuiz />} />
+        </Route>
+      </Routes>
+
     </div>
   );
 }
