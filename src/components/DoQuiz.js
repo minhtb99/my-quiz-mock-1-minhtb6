@@ -1,12 +1,17 @@
-import { Button, Card, Radio, Space } from 'antd';
+/* eslint-disable jsx-a11y/anchor-is-valid */
+import { Button, Card, Radio, Row, Space } from 'antd';
 import React, { useEffect, useRef, useState } from 'react'
+import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
+import { authLogout } from '../apis/Auth';
 import { getQuestionUsers, submitAnswers } from '../apis/Question';
-import { getCookie } from '../utilities/Cookie';
+import { getCookie, removeCookieAll } from '../utilities/Cookie';
 
 export default function DoQuiz() {
-  const [questions, setQuestion] = useState([]);
+  const [questions, setQuestion] = useState([])
   const [questionIndex, setQuestionIndex] = useState(0)
-  const answers = useRef([]);
+  const answers = useRef([])
+  const navigate = useNavigate();
 
   const onRadioChange = (e) => {
     answers.current[questionIndex].correctanswer = e.target.value
@@ -34,7 +39,12 @@ export default function DoQuiz() {
   const userSubmit = async (listAns) => {
     const { success, data } = await submitAnswers(listAns);
     if (success) {
-      console.log(data);
+      const score = data.filter(result => result.result).length
+      Swal.fire(
+        `${score}/${data.length}`,
+        'Click to exit !',
+        'success'
+      )
     } else {
       alert(data)
     }
@@ -49,16 +59,22 @@ export default function DoQuiz() {
   }
 
   const clickSubmit = () => {
-    console.log(answers.current)
     userSubmit(answers.current)
+  }
+
+  const handleLogout = async () => {
+    const refreshToken = getCookie('refreshuser')
+    await authLogout(refreshToken)
+    removeCookieAll();
+    navigate('/')
   }
 
   return (
     <div>
-      <Space align="center" style={{ width: 30, display: 'flex' }} >
-        <div>{getCookie('username')}</div>
-      </Space>
-      <Space align="center" direction="vertical" style={{ display: 'flex' }}>
+      <Row justify="center" style={{ marginTop: 10 }}>
+        <div><b>Welcome: {getCookie('username')} </b><a onClick={handleLogout}>Logout</a></div>
+      </Row>
+      <Space align="center" direction="vertical" style={{ display: 'flex', marginTop: 100 }}>
         {
           questions.length > 0 &&
           (
@@ -81,8 +97,6 @@ export default function DoQuiz() {
             :
             <Button type="primary" shape="round" onClick={clickNext}> Next & Save</Button>
           }
-
-
         </Space>
       </Space>
     </div>

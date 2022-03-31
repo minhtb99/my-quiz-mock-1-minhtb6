@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import { Button, Form, Input } from 'antd'
+import { Button, Form, Input, Space } from 'antd'
 import React from 'react'
 import { useNavigate } from 'react-router-dom';
 import { authLogin } from '../apis/Auth';
@@ -12,15 +12,18 @@ export default function FormLogin() {
         const loadTokenToLocal = async (user) => {
             const { success, data } = await authLogin(user)
             if (success) {
-               
                 if (data.user.role === 'user') {
                     const tokens = data.tokens
                     setCookie('tokenuser', tokens.access.token)
                     setCookie('refreshuser', tokens.refresh.token);
                     setCookie('username', data.user.username);
-                    
+
                     navigate('/do-quiz')
                 } else {
+                    const tokens = data.tokens
+                    setCookie('tokenuser', tokens.access.token)
+                    setCookie('refreshuser', tokens.refresh.token);
+                    setCookie('username', data.user.username);
                     navigate('/manage-quiz')
                 }
             } else {
@@ -36,14 +39,14 @@ export default function FormLogin() {
 
     return (
         <div>
-            <h1 style={{ textAlign: 'center' }} >Login</h1>
-            <Form className='form-login'
+            <h1 style={{ textAlign: 'center', marginTop: 200, marginBottom: 50 }} >Login</h1>
+            <Form
                 name="basic"
                 labelCol={{
                     span: 8,
                 }}
                 wrapperCol={{
-                    span: 10,
+                    span: 9,
                 }}
                 initialValues={{
                     remember: true,
@@ -78,28 +81,18 @@ export default function FormLogin() {
                 >
                     <Input.Password />
                 </Form.Item>
-
-                {/* <Form.Item
-                name="remember"
-                valuePropName="checked"
-                wrapperCol={{
-                    offset: 8,
-                    span: 16,
-                }}
-            >
-                <Checkbox>Remember me</Checkbox>
-            </Form.Item> */}
-
                 <Form.Item
                     wrapperCol={{
                         offset: 8,
                         span: 16,
                     }}
                 >
-                    <Button type="primary" htmlType="submit">
-                        Submit
-                    </Button>
-                    <a onClick={() => { navigate('/register') }} >Create account</a>
+                    <Space>
+                        <Button type="primary" htmlType="submit">
+                            Submit
+                        </Button>
+                        <a onClick={() => { navigate('/register') }} >Create account</a>
+                    </Space>
                 </Form.Item>
             </Form>
         </div>

@@ -29,3 +29,19 @@ export const authRegister = async (user) => {
         }
     }
 }
+
+export const authLogout = async (refreshToken) => {
+    try {
+        const reToken = { refreshToken: refreshToken }
+        const res = await axios.post(`/v1/auth/logout`, reToken)
+        return {
+            success: true,
+            data: res.data
+        };
+    } catch (error) {
+        return {
+            success: false,
+            data: error.response.data.message
+        }
+    }
+}

@@ -1,8 +1,9 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import { Button, Form, Input } from 'antd'
+import { Button, Form, Input, notification, Space } from 'antd'
 import React from 'react'
 import { useNavigate } from 'react-router-dom';
 import { authRegister } from '../apis/Auth';
+import { SmileOutlined } from '@ant-design/icons';
 
 export default function FormRegister() {
     const navigate = useNavigate()
@@ -12,7 +13,8 @@ export default function FormRegister() {
         const authRegisterApi = async (user) => {
             const { success, data } = await authRegister(user);
             if (success) {
-                navigate('/login')
+                openNotification();
+                navigate('/')
             } else {
                 alert(data)
             }
@@ -24,9 +26,19 @@ export default function FormRegister() {
         console.log('Failed:', errorInfo);
     }
 
+    const openNotification = () => {
+        notification.open({
+            message: 'Registers account successfully',
+            description:
+                'Your account has been successfully registered, log in to take the test ',
+            icon: <SmileOutlined style={{ color: '#108ee9' }} />,
+            duration: 7,
+        });
+    };
+
     return (
         <div>
-            <h1 style={{ textAlign: 'center' }} >Registers</h1>
+            <h1 style={{ textAlign: 'center', marginTop: 100 }} >Registers</h1>
             <Form
                 name="basic"
                 labelCol={{
@@ -88,7 +100,7 @@ export default function FormRegister() {
                         },
                         {
                             pattern: new RegExp('^(?=.*[a-z])(?=.*[0-9])'),
-                            message:'Password must contain at least 1 letter and 1 number'
+                            message: 'Password must contain at least 1 letter and 1 number'
                         }
                     ]}
                     hasFeedback
@@ -124,10 +136,12 @@ export default function FormRegister() {
                         span: 16,
                     }}
                 >
-                    <Button type="primary" htmlType="submit">
-                        Submit
-                    </Button>
-                    <a onClick={() =>{navigate('/login')}} >Do you have account aready?</a>
+                    <Space>
+                        <Button type="primary" htmlType="submit">
+                            Submit
+                        </Button>
+                        <a onClick={() => { navigate('/login') }} >Do you have account aready?</a>
+                    </Space>
                 </Form.Item>
             </Form>
         </div>

@@ -30,3 +30,19 @@ export const submitAnswers = async (listAns) => {
         }
     }
 }
+
+export const getQuestionAdmin = async (page) => {
+    try {
+        const res = await axios.get(`/v1/questions/edit?page=${page}`)
+        return {
+            success: true,
+            data: res.data
+        };
+    } catch (error) {
+        console.error(error.response.data.message);
+        return {
+            success: false,
+            data: error.response.data.message
+        }
+    }
+}

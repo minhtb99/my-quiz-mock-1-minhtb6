@@ -12,8 +12,8 @@ function App() {
     <div>
       <Routes>
         <Route path='/' element={<FormLogin />} />
+        <Route path='/register' element={< FormRegister />} />
         <Route element={<Guard />}>
-          <Route path='/register' element={< FormRegister />} />
           <Route path='/do-quiz' element={< DoQuiz />} />
           <Route path='/manage-quiz' element={< ManageQuiz />} />
         </Route>
