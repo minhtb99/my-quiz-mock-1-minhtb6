@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import { Button, Col, message, Modal, Pagination, Popconfirm, Row, Space, Table } from 'antd';
+import { Button, Col, message, Pagination, Popconfirm, Row, Space, Table } from 'antd';
 import Column from 'antd/lib/table/Column';
 import React, { useEffect, useRef, useState } from 'react'
 import { deleteQuestionById, getQuestionAdmin } from '../apis/Question'
