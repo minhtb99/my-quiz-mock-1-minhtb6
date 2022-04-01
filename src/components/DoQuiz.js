@@ -20,13 +20,13 @@ export default function DoQuiz() {
   const getQustionApi = async () => {
     const { success, data } = await getQuestionUsers();
     if (success) {
-      setQuestion(data.results)
       answers.current = data.results.map(question => {
         return {
           id: question.id,
           correctanswer: question.answer1
         }
       })
+      setQuestion(data.results)
     } else {
       alert(data)
     }

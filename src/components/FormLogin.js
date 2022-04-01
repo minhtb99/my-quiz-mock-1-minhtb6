@@ -17,6 +17,7 @@ export default function FormLogin() {
                     setCookie('tokenuser', tokens.access.token)
                     setCookie('refreshuser', tokens.refresh.token);
                     setCookie('username', data.user.username);
+                    setCookie('expires', tokens.access.expires)
 
                     navigate('/do-quiz')
                 } else {
@@ -24,6 +25,8 @@ export default function FormLogin() {
                     setCookie('tokenuser', tokens.access.token)
                     setCookie('refreshuser', tokens.refresh.token);
                     setCookie('username', data.user.username);
+                    setCookie('expires', tokens.access.expires);
+
                     navigate('/manage-quiz')
                 }
             } else {

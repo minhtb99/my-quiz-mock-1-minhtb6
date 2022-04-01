@@ -6,6 +6,8 @@ import { Route, Routes } from 'react-router-dom';
 import DoQuiz from './components/DoQuiz';
 import ManageQuiz from './components/ManageQuiz';
 import Guard from './Guard/Guard';
+import AddQuestion from './components/AddQuestion';
+import DetailQuestion from './components/DetailQuestion';
 
 function App() {
   return (
@@ -16,6 +18,8 @@ function App() {
         <Route element={<Guard />}>
           <Route path='/do-quiz' element={< DoQuiz />} />
           <Route path='/manage-quiz' element={< ManageQuiz />} />
+          <Route path='/add-question' element={< AddQuestion />} />
+          <Route path='/question-detail/:id' element={< DetailQuestion />} />
         </Route>
       </Routes>
 

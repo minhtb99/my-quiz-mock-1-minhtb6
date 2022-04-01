@@ -45,3 +45,18 @@ export const authLogout = async (refreshToken) => {
         }
     }
 }
+
+export const refreshToken = async (refreshToken) => {
+    try {
+        const res = await axios.create().post(`/v1/auth/refresh-tokens`, { refreshToken: refreshToken })
+        return {
+            success: true,
+            data: res.data
+        };
+    } catch (error) {
+        return {
+            success: false,
+            data: error.response.data.message
+        }
+    }
+}
