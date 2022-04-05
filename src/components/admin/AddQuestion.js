@@ -1,15 +1,19 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import { Button, Form, Input, Radio, Row, Space } from 'antd'
-import React from 'react'
+import { Button, Form, Input, message, Radio, Row, Space, Spin } from 'antd'
+import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { createQuestion } from '../../apis/Question'
 
 export default function AddQuestion() {
 
     const navigate = useNavigate()
+    const [loading, setLoading] = useState(false)
+
     const onFinish = async (values) => {
+        setLoading(true)
         const question = { ...values, correctanswer: values[values.correctanswer] }
         await createQuestion(question)
+        message.success('Add Question Successfully !');
         navigate('/manage-quiz')
     }
 
@@ -121,6 +125,7 @@ export default function AddQuestion() {
                         <Button type="primary" htmlType="submit">
                             Submit
                         </Button>
+                        {loading && (<Spin size="large" style={{ marginLeft: 30 }} />)}
                     </Space>
                 </Form.Item>
             </Form></div>

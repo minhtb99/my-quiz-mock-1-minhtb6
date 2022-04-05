@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import { Button, Col, message, Pagination, Popconfirm, Row, Space, Table } from 'antd';
+import { Button, Col, message, Pagination, Popconfirm, Row, Space, Spin, Table } from 'antd';
 import Column from 'antd/lib/table/Column';
 import React, { useEffect, useRef, useState } from 'react'
 import { deleteQuestionById, getQuestionAdmin } from '../../apis/Question'
@@ -9,13 +9,17 @@ import { useNavigate } from 'react-router-dom';
 export default function ManageQuiz() {
   const [listQuestion, setListQuestion] = useState([])
   const [pageIndex, setPageIndex] = useState(1);
+  const [loading, setLoading] = useState(false)
   const totalPages = useRef(0);
 
+
   const _getQuestion = async (page) => {
+    setLoading(true)
     const { success, data } = await getQuestionAdmin(page)
     if (success) {
       totalPages.current = data.totalPages;
       setListQuestion(data.results)
+      setLoading(false)
     }
   }
 
@@ -31,7 +35,7 @@ export default function ManageQuiz() {
 
   const clickDelete = async (idQuestion) => {
     await deleteQuestionById(idQuestion)
-    _getQuestion(pageIndex)
+    await _getQuestion(pageIndex)
     message.success('Delete Successfully !');
   }
 
@@ -97,6 +101,9 @@ export default function ManageQuiz() {
           </Row>
         )
       }
+      <Row justify='center'>
+        {loading && (<Spin size="large" style={{ marginTop: 100 }} />)}
+      </Row>
     </div >
   )
 }

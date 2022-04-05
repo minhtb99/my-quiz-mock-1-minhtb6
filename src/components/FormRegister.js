@@ -10,6 +10,7 @@ export default function FormRegister() {
     const [loading, setLoading] = useState(false)
 
     const onFinish = (values) => {
+        setLoading(true)
         delete values.rePassword;
         const authRegisterApi = async (user) => {
             const { success, data } = await authRegister(user);

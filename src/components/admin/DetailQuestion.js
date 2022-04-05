@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import { Button, Form, Input, Radio, Row, Space } from 'antd'
+import { Button, Form, Input, message, Radio, Row, Space, Spin } from 'antd'
 import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { getQuestionById, updateQuestion } from '../../apis/Question';
@@ -9,10 +9,15 @@ export default function DetailQuestion() {
     const { id } = useParams();
 
     const [questionDetail, setQuestionDetail] = useState()
+    const [loading, setLoading] = useState(false)
+    const [loadingEdit, setLoadingEdit] = useState(false)
+
 
     const getQuestion = async (idQuestion) => {
+        setLoading(true)
         const { success, data } = await getQuestionById(idQuestion)
         if (success) {
+            setLoading(false)
             setQuestionDetail(data)
         } else {
             alert(data)
@@ -24,8 +29,10 @@ export default function DetailQuestion() {
     }, [id])
 
     const onFinish = async (values) => {
+        setLoadingEdit(true)
         const question = { ...values }
         await updateQuestion(question, id)
+        message.success('Edit Question Successfully !');
         navigate('/manage-quiz')
     }
 
@@ -41,6 +48,10 @@ export default function DetailQuestion() {
             <Row justify='center'>
                 <h1>Question Detail</h1>
             </Row>
+            <Row justify='center'>
+                {loading && (<Spin style={{ marginTop: 30 }} />)}
+            </Row>
+
             {questionDetail && (
                 <Form
                     name="basic"
@@ -72,7 +83,7 @@ export default function DetailQuestion() {
                             },
                         ]}
                     >
-                        <Input.TextArea/>
+                        <Input.TextArea />
                     </Form.Item>
 
                     <Form.Item
@@ -148,6 +159,7 @@ export default function DetailQuestion() {
                                 Edit
                             </Button>
                             <a onClick={clickBack}>Back to dashboard</a>
+                            {loadingEdit && (<Spin style={{ marginLeft: 30 }} />)}
                         </Space>
                     </Form.Item>
                 </Form>
