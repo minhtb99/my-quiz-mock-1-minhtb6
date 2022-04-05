@@ -2,7 +2,7 @@
 import { Button, Col, message, Pagination, Popconfirm, Row, Space, Table } from 'antd';
 import Column from 'antd/lib/table/Column';
 import React, { useEffect, useRef, useState } from 'react'
-import { deleteQuestionById, getQuestionAdmin } from '../apis/Question'
+import { deleteQuestionById, getQuestionAdmin } from '../../apis/Question'
 import { PlusOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
 

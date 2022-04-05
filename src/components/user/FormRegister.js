@@ -2,7 +2,7 @@
 import { Button, Form, Input, notification, Space } from 'antd'
 import React from 'react'
 import { useNavigate } from 'react-router-dom';
-import { authRegister } from '../apis/Auth';
+import { authRegister } from '../../apis/Auth';
 import { SmileOutlined } from '@ant-design/icons';
 
 export default function FormRegister() {

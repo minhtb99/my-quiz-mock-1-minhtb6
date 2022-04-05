@@ -2,7 +2,7 @@
 import { Button, Form, Input, Radio, Row, Space } from 'antd'
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
-import { createQuestion } from '../apis/Question'
+import { createQuestion } from '../../apis/Question'
 
 export default function AddQuestion() {
 

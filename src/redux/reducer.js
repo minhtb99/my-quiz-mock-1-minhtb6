@@ -1,13 +1,13 @@
 const initState = {
-    user: {}
+    numberQuestion: 0
 }
 
 export const reducer = (state = initState, action) => {
     switch (action.type) {
-        case 'SET_USER':
+        case 'SET_NUMBER_QUESTIONS':
             return {
                 ...state,
-                user: action.payload
+                numberQuestion: action.payload
             }
         default:
             return state

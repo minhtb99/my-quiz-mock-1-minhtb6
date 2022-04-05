@@ -1,8 +1,8 @@
 import axios from "axios";
 
-export const getQuestionUsers = async () => {
+export const getQuestionUsers = async (limit) => {
     try {
-        const res = await axios.get(`/v1/questions/`)
+        const res = await axios.get(`/v1/questions?limit=${limit}`)
         return {
             success: true,
             data: res.data

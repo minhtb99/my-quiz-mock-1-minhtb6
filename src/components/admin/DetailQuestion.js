@@ -2,7 +2,7 @@
 import { Button, Form, Input, Radio, Row, Space } from 'antd'
 import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
-import { getQuestionById, updateQuestion } from '../apis/Question';
+import { getQuestionById, updateQuestion } from '../../apis/Question';
 
 export default function DetailQuestion() {
     const navigate = useNavigate()

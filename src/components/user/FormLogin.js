@@ -2,8 +2,8 @@
 import { Button, Form, Input, Space } from 'antd'
 import React from 'react'
 import { useNavigate } from 'react-router-dom';
-import { authLogin } from '../apis/Auth';
-import { setCookie } from '../utilities/Cookie';
+import { authLogin } from '../../apis/Auth';
+import { setCookie } from '../../utilities/Cookie';
 
 export default function FormLogin() {
     const navigate = useNavigate();
@@ -19,7 +19,7 @@ export default function FormLogin() {
                     setCookie('username', data.user.username);
                     setCookie('expires', tokens.access.expires)
 
-                    navigate('/do-quiz')
+                    navigate('/number-question')
                 } else {
                     const tokens = data.tokens
                     setCookie('tokenuser', tokens.access.token)

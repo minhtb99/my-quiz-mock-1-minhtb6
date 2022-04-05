@@ -12,7 +12,6 @@ axios.interceptors.request.use(async (req) => {
     if (expires <= current) {
         await refreshToken(getCookie("refreshuser"))
             .then((res) => {
-                console.log(res);
                 setCookie("tokenuser", res.data.access.token);
                 setCookie("expires", res.data.access.expires);
                 setCookie("refreshuser", res.data.refresh.token);
