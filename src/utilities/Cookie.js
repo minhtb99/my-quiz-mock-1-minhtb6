@@ -15,4 +15,5 @@ export const removeCookieAll = (name) => {
     cookies.remove('refreshuser', { path: '/' })
     cookies.remove('tokenuser', { path: '/' })
     cookies.remove('username', { path: '/' })
+    cookies.remove('expires', { path: '/' })
 }

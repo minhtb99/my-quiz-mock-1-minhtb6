@@ -1,14 +1,16 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import { Button, Form, Input, Space } from 'antd'
-import React from 'react'
+import { Button, Form, Input, Space, Spin } from 'antd'
+import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
-import { authLogin } from '../../apis/Auth';
-import { setCookie } from '../../utilities/Cookie';
+import { authLogin } from '../apis/Auth';
+import { setCookie } from '../utilities/Cookie';
 
 export default function FormLogin() {
     const navigate = useNavigate();
+    const [loading, setLoading] = useState(false)
 
     const onFinish = (values) => {
+        setLoading(true)
         const loadTokenToLocal = async (user) => {
             const { success, data } = await authLogin(user)
             if (success) {
@@ -95,6 +97,7 @@ export default function FormLogin() {
                             Submit
                         </Button>
                         <a onClick={() => { navigate('/register') }} >Create account</a>
+                        {loading && (<Spin style={{ marginLeft: 30 }} />)}
                     </Space>
                 </Form.Item>
             </Form>

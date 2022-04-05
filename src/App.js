@@ -1,7 +1,7 @@
 import './App.css';
 import 'antd/dist/antd.css'
-import FormLogin from './components/user/FormLogin';
-import FormRegister from './components/user/FormRegister';
+import FormLogin from './components/FormLogin';
+import FormRegister from './components/FormRegister';
 import { Route, Routes } from 'react-router-dom';
 import DoQuiz from './components/user/DoQuiz';
 import ManageQuiz from './components/admin/ManageQuiz';

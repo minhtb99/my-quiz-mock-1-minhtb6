@@ -1,12 +1,13 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import { Button, Form, Input, notification, Space } from 'antd'
-import React from 'react'
+import { Button, Form, Input, notification, Space, Spin } from 'antd'
+import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
-import { authRegister } from '../../apis/Auth';
+import { authRegister } from '../apis/Auth';
 import { SmileOutlined } from '@ant-design/icons';
 
 export default function FormRegister() {
     const navigate = useNavigate()
+    const [loading, setLoading] = useState(false)
 
     const onFinish = (values) => {
         delete values.rePassword;
@@ -140,7 +141,8 @@ export default function FormRegister() {
                         <Button type="primary" htmlType="submit">
                             Submit
                         </Button>
-                        <a onClick={() => { navigate('/login') }} >Do you have account aready?</a>
+                        <a onClick={() => { navigate('/') }} >Do you have account aready?</a>
+                        {loading && (<Spin />)}
                     </Space>
                 </Form.Item>
             </Form>

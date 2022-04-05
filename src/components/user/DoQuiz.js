@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import { Button, Card, Radio, Row, Space } from 'antd';
+import { Button, Card, Radio, Row, Space, Spin } from 'antd';
 import React, { useEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
@@ -10,6 +10,9 @@ import { getCookie, removeCookieAll } from '../../utilities/Cookie';
 export default function DoQuiz({ numberQuestion }) {
   const [questions, setQuestion] = useState([])
   const [questionIndex, setQuestionIndex] = useState(0)
+  const [loading, setLoading] = useState(false);
+  const [loadingResult, setLoadingResult] = useState(false);
+
   const answers = useRef([])
   const totalQuestion = useRef(0)
   const navigate = useNavigate();
@@ -19,6 +22,7 @@ export default function DoQuiz({ numberQuestion }) {
   }
 
   const getQustionApi = async (numberQuestion) => {
+    setLoading(true)
     const { success, data } = await getQuestionUsers(numberQuestion)
     if (success) {
       totalQuestion.current = data.results.length
@@ -29,6 +33,7 @@ export default function DoQuiz({ numberQuestion }) {
         }
       })
       setQuestion(data.results)
+      setLoading(false)
     } else {
       alert(data)
     }
@@ -39,6 +44,7 @@ export default function DoQuiz({ numberQuestion }) {
   }, [numberQuestion])
 
   const userSubmit = async (listAns) => {
+    setLoadingResult(true)
     const { success, data } = await submitAnswers(listAns);
     if (success) {
       const score = data.filter(result => result.result).length
@@ -47,6 +53,7 @@ export default function DoQuiz({ numberQuestion }) {
         'Click to close !',
         'success'
       )
+      setLoadingResult(false)
     } else {
       alert(data)
     }
@@ -65,10 +72,11 @@ export default function DoQuiz({ numberQuestion }) {
   }
 
   const handleLogout = async () => {
+    navigate('/')
     const refreshToken = getCookie('refreshuser')
     await authLogout(refreshToken)
     removeCookieAll();
-    navigate('/')
+
   }
 
   return (
@@ -77,6 +85,7 @@ export default function DoQuiz({ numberQuestion }) {
         <div><b>Welcome: {getCookie('username')} </b><a onClick={handleLogout}>Logout</a></div>
       </Row>
       <Space align="center" direction="vertical" style={{ display: 'flex', marginTop: 100 }}>
+        {loading && (<Spin style={{ marginBottom: 80 }} />)}
         {
           questions.length > 0 &&
           (<div>
@@ -97,11 +106,14 @@ export default function DoQuiz({ numberQuestion }) {
         <Space size="middle" style={{ marginTop: 30 }}>
           <Button type="primary" shape="round" disabled={questionIndex === 0} onClick={clickPrevious}> Previous </Button>
           {questionIndex === questions.length - 1 ?
-            (<Button type="primary" shape="round" onClick={clickSubmit}> Submit</Button>)
+            (<Button type="primary" shape="round" onClick={clickSubmit} danger> Submit</Button>)
             :
             <Button type="primary" shape="round" onClick={clickNext}> Next & Save</Button>
           }
         </Space>
+        {
+          loadingResult && (<Spin style={{ marginTop: 20 }} />)
+        }
       </Space>
     </div>
   )

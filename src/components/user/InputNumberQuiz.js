@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import { Button, Form, Input, InputNumber, Row } from 'antd';
+import { Button, Form, InputNumber, Row } from 'antd';
 import React from 'react'
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
@@ -20,10 +20,10 @@ export default function InputNumberQuiz() {
     };
 
     const handleLogout = async () => {
+        navigate('/')
         const refreshToken = getCookie('refreshuser')
         await authLogout(refreshToken)
         removeCookieAll();
-        navigate('/')
     }
     return (
         <div>
